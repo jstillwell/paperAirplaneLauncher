@@ -1,7 +1,8 @@
 /* 
-This is a test sketch for the Adafruit assembled Motor Shield for Arduino v2
-It won't work with v1.x motor shields! Only for the v2's with built in PWM
-control
+This is a sketch to run two motors simultaneously, triggered by a momentary switch,
+in order to launch paper airplanes. 
+
+This project was inspired by a trip my daughter and I took to the Glazer Childrens Museum in Tampa, FL.
 
 For use with the Adafruit Motor Shield v2 
 ---->	http://www.adafruit.com/products/1438
