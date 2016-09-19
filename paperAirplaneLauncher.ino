@@ -10,16 +10,13 @@ For use with the Adafruit Motor Shield v2
 
 #include <Wire.h>
 #include <Adafruit_MotorShield.h>
-#include "utility/Adafruit_MS_PWMServoDriver.h"
+#include "utility/Adafruit_PWMServoDriver.h"
 
 // Create the motor shield object with the default I2C address
 Adafruit_MotorShield AFMS = Adafruit_MotorShield(); 
-// Or, create it with a different I2C address (say for stacking)
-// Adafruit_MotorShield AFMS = Adafruit_MotorShield(0x61); 
 
-// Select which 'port' M1, M2, M3 or M4. In this case, M1
+// Select 'port'
 Adafruit_DCMotor *myMotor1 = AFMS.getMotor(1);
-// You can also make another motor on port M2
 Adafruit_DCMotor *myMotor2 = AFMS.getMotor(2);
 
 //momentary button
@@ -28,13 +25,15 @@ int buttonState = 0;
 int buttonStateCache = 0;
 int buttonPushCounter = 0;
 
-void setup() {
-  Serial.begin(9600);           // set up Serial library at 9600 bps
-  //Serial.println("Adafruit Motorshield v2 - DC Motor test!");
-  pinMode(buttonPin,INPUT);
+//Button LED
+const int ledPin = 9;
 
-  AFMS.begin();  // create with the default frequency 1.6KHz
-  //AFMS.begin(1000);  // OR with a different frequency, say 1KHz
+void setup() {
+  Serial.begin(9600);
+  pinMode(buttonPin,INPUT);
+  pinMode(ledPin, OUTPUT);
+  
+  AFMS.begin();
 }
 
 void loop() {
@@ -55,10 +54,14 @@ void loop() {
 
 //  Serial.println(buttonPushCounter%2);
   //check the button press count to determine if we turn the motor on or off
+  //update LED state to match button state.
   if(buttonPushCounter % 2 == 0){
     stopMotors();
+	  digitalWrite(ledPin, LOW);
+    //TODO: add timer to stop button from being left on.
   } else {
     startMotors();
+	  digitalWrite(ledPin, HIGH);
   }
 }
 
